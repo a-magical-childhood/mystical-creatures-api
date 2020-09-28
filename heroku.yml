@@ -4,4 +4,4 @@ build:
 release:
   image: web
 run:
-  web: mkdir static && ./manage.py collectstatic && gunicorn mystical_creatures_api.wsgi
+  web: mkdir static && gunicorn mystical_creatures_api.wsgi
