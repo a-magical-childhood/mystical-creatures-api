@@ -10,18 +10,33 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-from pathlib import Path
 import environ
-env = environ.Env(
-		DEBUG=(bool,False)
-)
-#read .env file
-environ.Env.read_env()  #this is class or static method
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    ENVIRONMENT=(str, 'PRODUCTION')
+)
+
+# reading .env file
+environ.Env.read_env()
+
+ENVIRONMENT = env.str('ENVIRONMENT')
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = env.str('SECRET_KEY')
+
+DEBUG = env.bool('DEBUG')
+
+ALLOWED_HOSTS = tuple(env.list('ALLOWED_HOSTS'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -138,11 +153,22 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CORS_ORIGIN_WHITELIST=[
     "http://localhost:19002",
     "https://heroku-mystical-creatures.herokuapp.com",
 
 ]
+# production
+
+if ENVIRONMENT == 'production':
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
