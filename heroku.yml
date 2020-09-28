@@ -4,7 +4,7 @@ build:
 release:
   image: web
   command:
-    - mkdir static
+    - mkdir -p static
     - python manage.py collectstatic --noinput
 run:
   web: gunicorn mystical_creatures_api.wsgi
