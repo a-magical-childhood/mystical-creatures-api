@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'creatures.apps.CreaturesConfig',
+    # 3rd party
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -68,6 +71,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mystical_creatures_api.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 
 # Database
