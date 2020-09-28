@@ -3,5 +3,8 @@ build:
     web: Dockerfile
 release:
   image: web
+  command:
+    - mkdir static
+    - python manage.py collectstatic --noinput
 run:
-  web: mkdir static && gunicorn mystical_creatures_api.wsgi
+  web: gunicorn mystical_creatures_api.wsgi
