@@ -63,10 +63,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'creatures.apps.CreaturesConfig',
     # 3rd party
-    'rest_framework'
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -163,7 +165,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 CORS_ORIGIN_WHITELIST=[
     "http://localhost:3000",
     "http://localhost:19002",
-    "https://heroku-creatures.herokuapp.com",
+    "https://heroku-creatures-api.herokuapp.com",
 
 ]
 # production
